@@ -63,3 +63,12 @@ services:
     volumes:
      - ./.docker_data/openvpn/conf:/etc/openvpn
 
+  socks5:
+    image: serjs/go-socks5-proxy
+    container_name: socks5
+    restart: unless-stopped
+    ports:
+        - 1080:1080
+    environment:
+      - PROXY_USER=${SOCKS5_PROXY_USER}
+      - PROXY_PASSWORD=${SOCKS5_PROXY_PASSWORD}
