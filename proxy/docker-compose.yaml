@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  mailproxy:
+    image: nginx:1.21.1
+    container_name: nginx-mailfence-proxy
+    restart: unless-stopped
+    volumes:
+      - './nginx.conf:/etc/nginx/nginx.conf'
+    ports:
+      - '465:465'
+      - '993:993'
+
+  socks5:
+    image: serjs/go-socks5-proxy
+    container_name: socks5
+    restart: unless-stopped
+    ports:
+        - 1080:1080
+    environment:
+      - PROXY_USER=${SOCKS5_PROXY_USER}
+      - PROXY_PASSWORD=${SOCKS5_PROXY_PASSWORD}
